@@ -1,0 +1,13 @@
+{
+    "name": "followmelistenme/useresponse-client",
+    "description": "Simple client for api.useresponse.com",
+    "type": "l",
+    "autoload": {
+        "psr-4": {
+            "UseresponseClient\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.5"
+    }
+}
