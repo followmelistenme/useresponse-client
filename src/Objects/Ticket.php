@@ -1,6 +1,6 @@
 <?php
 
-namespace UseresponseClient;
+namespace UseresponseClient\Objects;
 
 class Ticket extends UseResponseObject
 {

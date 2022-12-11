@@ -1,5 +1,7 @@
 <?php
 
+namespace UseresponseClient\Objects;
+
 use Psr\Http\Message\MessageInterface;
 
 class UseResponseObjectCreated
@@ -16,5 +18,14 @@ class UseResponseObjectCreated
         $this->type = $responseArray['success']['type']['title']['single'];
         $this->ownership = $responseArray['success']['ownership'];
         $this->title = $responseArray['success']['title'];
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'type' => $this->type,
+            'ownership' => $this->ownership,
+            'title' => $this->title,
+        ];
     }
 }

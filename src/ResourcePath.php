@@ -2,7 +2,7 @@
 
 namespace UseresponseClient;
 
-class Endpoints
+class ResourcePath
 {
     public const OBJECTS = '/objects.json';
 }

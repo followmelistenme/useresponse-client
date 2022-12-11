@@ -12,13 +12,15 @@ class ClientConfig
 
     private string $apiVersion;
 
+    private string $apiPath;
+
     private int $connectionTimeout;
 
     private bool $useSSL;
 
     private string $userAgent;
 
-    public function __construct(string $authToken, string $hostname, int $connectionTimeout, bool $useSSL, string $userAgent)
+    public function __construct(string $authToken, string $hostname, string $apiPath, int $connectionTimeout, bool $useSSL, string $userAgent)
     {
         $this->authToken = $authToken;
         $this->hostname = $hostname;
@@ -26,12 +28,17 @@ class ClientConfig
         $this->useSSL = $useSSL;
         $this->userAgent = $userAgent;
         $this->apiVersion = static::API_VERSION_LATEST;
+        $this->apiPath = $apiPath;
     }
 
-    public function setApiVersion(string $version): self
+    public function getApiVersion(): string
     {
-        $this->apiVersion = $version;
-        return $this;
+        return $this->apiVersion;
+    }
+
+    public function getApiPath():  string
+    {
+        return $this->apiPath;
     }
 
     public function toGuzzleConfigMap(): array
@@ -40,10 +47,10 @@ class ClientConfig
             \GuzzleHttp\RequestOptions::HEADERS => [
                 'user-agent' => $this->userAgent,
                 'Authorization' => $this->authToken,
-                'base_uri' => sprintf('https://%s/api/%s/', $this->hostname, $this->apiVersion),
-                'verify' => $this->useSSL,
-                'connect_timeout' => $this->connectionTimeout,
-            ]
+            ],
+            'base_uri' => sprintf('https://%s', $this->hostname),
+            'verify' => $this->useSSL,
+            'connect_timeout' => $this->connectionTimeout,
         ];
     }
 }

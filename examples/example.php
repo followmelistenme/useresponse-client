@@ -1,0 +1,23 @@
+<?php
+
+use UseresponseClient\Client;
+use UseresponseClient\ClientConfig;
+use UseresponseClient\Exceptions\HttpBadRequestException;
+use UseresponseClient\Objects\Ticket;
+
+require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/Name.php';
+
+$config = new ClientConfig('your_token', 'your.domain', '/your_path', 5, true, 'user-agent string');
+$client = Client::initByConfig($config);
+$ticket = (new Ticket("helpdesk", "test"))->addCustomField(new Name('test name'));
+
+try {
+$result = $client->createObject($ticket);
+} catch (HttpBadRequestException $e) {
+    echo $e->getResponse();
+    die;
+}
+
+echo json_encode($result->toArray());
+die;
