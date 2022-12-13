@@ -16,6 +16,9 @@ abstract class UseResponseObject
 
     private string $notifyName;
 
+    /** Attachment[] $attachments */
+    private array $attachments = [];
+
     /** CustomField[] $customFields */
     private array $customFields = [];
 
@@ -35,12 +38,28 @@ abstract class UseResponseObject
         return $this;
     }
 
+    public function addAttachment(Attachment $attachment): self
+    {
+        $this->attachments[] = $attachment;
+        return $this;
+    }
+
     public function toClientFormat(): array
     {
         $properties = null;
         if (!empty($this->customFields)) {
             $properties = [];
-            array_map(function(CustomField $customField) use (&$properties) { $properties[$customField->getName()] = $customField->getValue();}, $this->customFields);
+            array_map(function(CustomField $customField) use (&$properties) {
+                $properties[$customField->getName()] = $customField->getValue();
+            }, $this->customFields);
+        }
+
+        $attachments = [];
+
+        if (!empty($this->attachments)) {
+            array_map(function(Attachment $attachment) use (&$attachments) {
+                $attachments[] = $attachment->toClientFormat();
+            }, $this->attachments);
         }
         return [
             'object_type' => $this->type,
@@ -50,6 +69,7 @@ abstract class UseResponseObject
             'content' => $this->content,
             'notify_email' => $this->notifyEmail,
             'notify_name' => $this->notifyName,
+            'attachments' => $attachments,
         ];
     }
 }
