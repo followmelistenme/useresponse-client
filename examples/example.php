@@ -10,7 +10,7 @@ require __DIR__ . '/Name.php';
 
 $config = new ClientConfig('your_token', 'your.domain', '/your_path', 5, true, 'user-agent string');
 $client = Client::initByConfig($config);
-$ticket = (new Ticket("helpdesk", "test"))->addCustomField(new Name('test name'));
+$ticket = (new Ticket('helpdesk', 'smth went wrong', 'notify@mail.ru', 'notify name', 'content'))->addCustomField(new Name('test name'));
 
 try {
 $result = $client->createObject($ticket);
