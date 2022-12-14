@@ -22,6 +22,9 @@ abstract class UseResponseObject
     /** CustomField[] $customFields */
     private array $customFields = [];
 
+    /** string[] $tags */
+    private array $tags = [];
+
     public function __construct(string $type, string $ownership, string $title, string $notifyEmail, string $notifyName, string $content)
     {
         $this->type = $type;
@@ -41,6 +44,12 @@ abstract class UseResponseObject
     public function addAttachment(Attachment $attachment): self
     {
         $this->attachments[] = $attachment;
+        return $this;
+    }
+
+    public function addTag(string $tag): self
+    {
+        $this->tags[] = $tag;
         return $this;
     }
 
@@ -70,6 +79,7 @@ abstract class UseResponseObject
             'notify_email' => $this->notifyEmail,
             'notify_name' => $this->notifyName,
             'attachments' => $attachments,
+            'tags' => $this->tags,
         ];
     }
 }

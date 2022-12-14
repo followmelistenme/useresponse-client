@@ -15,7 +15,8 @@ $attach = new Attachment('name.jpg', 'base64hash');
 
 $ticket = (new Ticket('helpdesk', 'smth went wrong', 'notify@mail.ru', 'notify name', 'content'))
     ->addCustomField(new Name('test name'))
-    ->addAttachment($attach);
+    ->addAttachment($attach)
+    ->addTag('some_tag');
 
 try {
 $result = $client->createObject($ticket);
