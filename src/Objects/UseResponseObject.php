@@ -70,16 +70,18 @@ abstract class UseResponseObject
                 $attachments[] = $attachment->toClientFormat();
             }, $this->attachments);
         }
-        return [
-            'object_type' => $this->type,
-            'ownership' => $this->ownership,
-            'title' => $this->title,
-            'properties' => $properties,
-            'content' => $this->content,
-            'notify_email' => $this->notifyEmail,
-            'notify_name' => $this->notifyName,
-            'attachments' => $attachments,
-            'tags' => $this->tags,
-        ];
+        return array_merge(
+            $properties,
+            [
+                'object_type' => $this->type,
+                'ownership' => $this->ownership,
+                'title' => $this->title,
+                'content' => $this->content,
+                'notify_email' => $this->notifyEmail,
+                'notify_name' => $this->notifyName,
+                'attachments' => $attachments,
+                'tags' => $this->tags,
+            ]
+        );
     }
 }
